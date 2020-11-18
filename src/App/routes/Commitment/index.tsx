@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import { useClient } from "../../../contexts/ClientContext";
 import { IbcPacketCommitmentResponse } from "../../../types/ibc";
 import { HeightData } from "../../components/HeightData";
 import { Navigation } from "../../components/Navigation";
+import { pathChannel } from "../../paths";
 import { style } from "../../style";
 
 interface CommitmentParams {
@@ -35,6 +36,9 @@ export function Commitment(): JSX.Element {
   return (
     <div className="container mx-auto flex flex-col">
       <Navigation />
+      <Link to={`${pathChannel}/${portId}/${channelId}`} className={`${style.button} self-start`}>
+        ← Back to Channel
+      </Link>
       <span className={style.title}>Commitment</span>
       {portId ? <span>Port ID: {portId}</span> : null}
       {channelId ? <span>Channel ID: {channelId}</span> : null}
