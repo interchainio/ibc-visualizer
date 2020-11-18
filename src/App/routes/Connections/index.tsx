@@ -31,9 +31,9 @@ export function Connections(): JSX.Element {
           const connections = connectionPaths
             ? await Promise.all(
                 connectionPaths.map(async (connectionId) => {
-                  const responsePromise = await getClient().ibc.unverified.connection(connectionId);
-                  const connection: ibc.core.connection.v1.IIdentifiedConnection = responsePromise.connection
-                    ? { ...responsePromise, id: connectionId }
+                  const connectionResponse = await getClient().ibc.unverified.connection(connectionId);
+                  const connection: ibc.core.connection.v1.IIdentifiedConnection = connectionResponse.connection
+                    ? { ...connectionResponse, id: connectionId }
                     : { id: connectionId };
 
                   return connection;
