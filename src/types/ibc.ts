@@ -3,7 +3,7 @@ import { codec } from "@cosmjs/stargate";
 const connection = codec.ibc.core.connection.v1;
 const channel = codec.ibc.core.channel.v1;
 
-// IBC common typess
+// IBC common types
 export const IbcConnectionState = connection.State;
 export const IbcChannelState = channel.State;
 export const IbcOrder = channel.Order;
