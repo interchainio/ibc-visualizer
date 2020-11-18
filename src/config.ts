@@ -3,7 +3,7 @@ interface AppConfig {
 }
 
 const local: AppConfig = {
-  rpcUrl: "http://localhost:26657",
+  rpcUrl: "http://localhost:26658",
 };
 
 const coralnet: AppConfig = {
