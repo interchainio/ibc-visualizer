@@ -1,6 +1,9 @@
 interface AppConfig {
   readonly rpcUrl: string;
 }
+interface NetworkConfigs {
+  readonly [key: string]: AppConfig;
+}
 
 const local: AppConfig = {
   rpcUrl: "http://localhost:26658",
@@ -10,7 +13,8 @@ const coralnet: AppConfig = {
   rpcUrl: "https://rpc.coralnet.cosmwasm.com",
 };
 
-// REACT_APP_LOCAL is set via `yarn start:local`
-const isLocal = process.env.NODE_ENV !== "production" && !!process.env.REACT_APP_LOCAL;
+const networks: NetworkConfigs = {
+  ["coralnet"]: coralnet,
+};
 
-export const config = isLocal ? local : coralnet;
+export const config = process.env.REACT_APP_NETWORK ? networks[process.env.REACT_APP_NETWORK] : local;

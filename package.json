@@ -28,9 +28,9 @@
   },
   "scripts": {
     "prestart": "npm run build:tailwind",
-    "prestart:local": "npm run build:tailwind",
-    "start:local": "REACT_APP_LOCAL=true react-scripts start",
     "start": "react-scripts start",
+    "prestart:coralnet": "npm run build:tailwind",
+    "start:coralnet": "REACT_APP_NETWORK=coralnet react-scripts start",
     "build:tailwind": "tailwindcss build src/index.css -o src/tailwind.output.css",
     "prebuild": "NODE_ENV=production npm run build:tailwind",
     "build": "react-scripts build",
