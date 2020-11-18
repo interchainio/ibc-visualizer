@@ -43,6 +43,6 @@ export function ChannelData({ portId, channelId }: ChannelDataProps): JSX.Elemen
       </div>
     </div>
   ) : (
-    <span className={style.subtitle}>No channel found</span>
+    <div className={style.subtitle}>No channel found</div>
   );
 }

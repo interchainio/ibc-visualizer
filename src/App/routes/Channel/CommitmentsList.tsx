@@ -40,6 +40,6 @@ export function CommitmentsList({ portId, channelId }: CommitmentsListProps): JS
       </div>
     </div>
   ) : (
-    <span className={style.subtitle}>No commitments found</span>
+    <div className={style.subtitle}>No commitments found</div>
   );
 }

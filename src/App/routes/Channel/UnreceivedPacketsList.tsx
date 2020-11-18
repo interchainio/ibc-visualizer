@@ -33,7 +33,7 @@ export function UnreceivedPacketsList({
 
   return unreceivedPacketsResponse.sequences.length ? (
     <div className="flex flex-col m-2 ml-0">
-      <span className={style.title}>Unreceived packets</span>
+      <span className={style.subtitle}>Unreceived packets</span>
       <div className="flex flex-row flex-wrap">
         {unreceivedPacketsResponse.sequences.map((sequence, index) => (
           <span key={index} className={style.listItemStyle}>
@@ -43,6 +43,6 @@ export function UnreceivedPacketsList({
       </div>
     </div>
   ) : (
-    <span className={style.title}>No unreceived packets for sequence {sequence}</span>
+    <div className={style.subtitle}>No unreceived packets for sequence {sequence}</div>
   );
 }

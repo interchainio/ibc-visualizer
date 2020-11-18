@@ -35,6 +35,6 @@ export function UnreceivedAcksList({ portId, channelId, sequence }: UnreceivedAc
       </div>
     </div>
   ) : (
-    <span className={style.subtitle}>No unreceived acknowledgements for sequence {sequence}</span>
+    <div className={style.subtitle}>No unreceived acknowledgements for sequence {sequence}</div>
   );
 }

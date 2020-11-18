@@ -43,6 +43,6 @@ export function AcknowledgementsList({ portId, channelId }: AcknowledgementsList
       </div>
     </div>
   ) : (
-    <span className={style.subtitle}>No acknowledgements found</span>
+    <div className={style.subtitle}>No acknowledgements found</div>
   );
 }

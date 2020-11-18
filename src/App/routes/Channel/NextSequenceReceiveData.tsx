@@ -38,6 +38,6 @@ export function NextSequenceReceiveData({ portId, channelId }: NextSequenceRecei
       </span>
     </div>
   ) : (
-    <span className="font-bold">No next sequence receive found</span>
+    <div className="font-bold">No next sequence receive found</div>
   );
 }
