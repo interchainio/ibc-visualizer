@@ -5,5 +5,5 @@ export function ellideMiddle(str: string, maxOutLen: number): string {
   const ellide = "…";
   const frontLen = Math.ceil((maxOutLen - ellide.length) / 2);
   const tailLen = Math.floor((maxOutLen - ellide.length) / 2);
-  return str.slice(0, frontLen) + ellide + str.slice(str.length - tailLen, str.length);
+  return str.slice(0, frontLen) + ellide + str.slice(-tailLen);
 }
