@@ -1,3 +1,4 @@
+import { toHex } from "@cosmjs/encoding";
 import React, { useEffect, useState } from "react";
 
 import { useClient } from "../../../contexts/ClientContext";
@@ -28,7 +29,7 @@ export function NextSequenceReceiveData({ portId, channelId }: NextSequenceRecei
     <div className="flex flex-col m-2 ml-0">
       <span>
         Next sequence receive proof:{" "}
-        {nextSequenceReceiveResponse.proof.length ? `[${nextSequenceReceiveResponse.proof.toString()}]` : "–"}
+        {nextSequenceReceiveResponse.proof.length ? toHex(nextSequenceReceiveResponse.proof) : "–"}
       </span>
       <span>
         Next sequence receive:{" "}

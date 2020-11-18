@@ -1,3 +1,4 @@
+import { toHex } from "@cosmjs/encoding";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -33,9 +34,7 @@ export function Connection(): JSX.Element {
       {connectionId ? <span>Connection ID: {connectionId}</span> : null}
       {connectionResponse ? (
         <>
-          <span>
-            Proof: {connectionResponse.proof.length ? `[${connectionResponse.proof.toString()}]` : "–"}
-          </span>
+          <span>Proof: {connectionResponse.proof.length ? toHex(connectionResponse.proof) : "–"}</span>
           <HeightData height={connectionResponse.proofHeight} />
           {connectionResponse.connection ? (
             <div className="flex flex-col">

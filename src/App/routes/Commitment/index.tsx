@@ -1,3 +1,4 @@
+import { toHex } from "@cosmjs/encoding";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
@@ -45,11 +46,9 @@ export function Commitment(): JSX.Element {
       {sequence ? <span>Sequence: {sequence}</span> : null}
       {commitmentResponse.commitment ? (
         <div className="flex flex-col">
-          <span>
-            Proof: {commitmentResponse.proof.length ? `[${commitmentResponse.proof.toString()}]` : "–"}
-          </span>
+          <span>Proof: {commitmentResponse.proof.length ? toHex(commitmentResponse.proof) : "–"}</span>
           <HeightData height={commitmentResponse.proofHeight} />
-          <span>Data: {`[${commitmentResponse.commitment.toString()}]`}</span>
+          <span>Data: {toHex(commitmentResponse.commitment)}</span>
         </div>
       ) : (
         <span>No commitment found</span>

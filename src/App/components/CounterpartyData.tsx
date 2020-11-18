@@ -1,3 +1,4 @@
+import { toHex } from "@cosmjs/encoding";
 import { ibc } from "@cosmjs/stargate/types/codec";
 import React from "react";
 
@@ -14,7 +15,7 @@ export function CounterpartyData({ counterparty }: CounterpartyDataProps): JSX.E
       {counterparty?.clientId ? <span>Client ID: {counterparty.clientId}</span> : null}
       {counterparty?.connectionId ? <span>Connection ID: {counterparty.connectionId}</span> : null}
       {counterparty?.prefix?.keyPrefix?.length ? (
-        <span>Prefix: {`[${counterparty?.prefix?.keyPrefix.toString()}]`}</span>
+        <span>Prefix: {toHex(counterparty?.prefix?.keyPrefix)}</span>
       ) : null}
       {counterparty?.portId ? <span>Port ID: {counterparty.portId}</span> : null}
       {counterparty?.channelId ? <span>Channel ID: {counterparty.channelId}</span> : null}

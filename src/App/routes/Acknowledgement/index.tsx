@@ -1,3 +1,4 @@
+import { toHex } from "@cosmjs/encoding";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
@@ -45,9 +46,9 @@ export function Acknowledgement(): JSX.Element {
       {sequence ? <span>Sequence: {sequence}</span> : null}
       {ackResponse.acknowledgement ? (
         <div className="flex flex-col">
-          <span>Proof: {ackResponse.proof.length ? `[${ackResponse.proof.toString()}]` : "–"}</span>
+          <span>Proof: {ackResponse.proof.length ? toHex(ackResponse.proof) : "–"}</span>
           <HeightData height={ackResponse.proofHeight} />
-          <span>Data: {`[${ackResponse.acknowledgement.toString()}]`}</span>
+          <span>Data: {toHex(ackResponse.acknowledgement)}</span>
         </div>
       ) : (
         <span className={style.title}>No acknowledgement found</span>

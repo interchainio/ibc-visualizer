@@ -1,3 +1,4 @@
+import { toHex } from "@cosmjs/encoding";
 import React, { useEffect, useState } from "react";
 
 import { useClient } from "../../../contexts/ClientContext";
@@ -25,7 +26,7 @@ export function ChannelData({ portId, channelId }: ChannelDataProps): JSX.Elemen
 
   return channelResponse.channel ? (
     <div>
-      <span>Proof: {channelResponse.proof.length ? `[${channelResponse.proof.toString()}]` : "–"}</span>
+      <span>Proof: {channelResponse.proof.length ? toHex(channelResponse.proof) : "–"}</span>
       <HeightData height={channelResponse.proofHeight} />
       <div className="flex flex-col">
         <span>
