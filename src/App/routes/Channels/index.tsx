@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 
 import { useClient } from "../../../contexts/ClientContext";
 import { IbcChannelsResponse } from "../../../types/ibc";
+import { ellideMiddle } from "../../../utils/strings";
 import { HeightData } from "../../components/HeightData";
 import { Navigation } from "../../components/Navigation";
 import { pathChannel } from "../../paths";
@@ -63,8 +64,10 @@ export function Channels(): JSX.Element {
                   key={index}
                   className={style.button}
                 >
-                  <span>{channel.portId ?? "–"}</span>
-                  <span>{channel.channelId ?? "–"}</span>
+                  <span>{`${ellideMiddle(channel.portId ?? "–", 20)} | ${ellideMiddle(
+                    channel.channelId ?? "–",
+                    20,
+                  )}`}</span>
                 </Link>
               ))}
             </div>

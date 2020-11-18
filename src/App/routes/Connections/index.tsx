@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 
 import { useClient } from "../../../contexts/ClientContext";
 import { IbcConnectionsResponse } from "../../../types/ibc";
+import { ellideMiddle } from "../../../utils/strings";
 import { HeightData } from "../../components/HeightData";
 import { Navigation } from "../../components/Navigation";
 import { pathConnection } from "../../paths";
@@ -75,7 +76,7 @@ export function Connections(): JSX.Element {
             <div className="flex flex-row flex-wrap">
               {connectionsResponse.connections.map((connection, index) => (
                 <Link to={`${pathConnection}/${connection.id}`} key={index} className={style.button}>
-                  <span>{connection.id ?? "–"}</span>
+                  <span>{ellideMiddle(connection.id ?? "–", 20)}</span>
                 </Link>
               ))}
             </div>
