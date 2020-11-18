@@ -12,7 +12,7 @@ import { style } from "../../style";
 import { SelectClientId } from "./SelectClientId";
 
 interface ConnectionsParams {
-  readonly clientId: string;
+  readonly clientId?: string;
 }
 
 export function Connections(): JSX.Element {
@@ -69,7 +69,7 @@ export function Connections(): JSX.Element {
       <Navigation />
       <div>
         <span className={style.title}>Connections</span>
-        <SelectClientId clientId={clientId} />
+        <SelectClientId clientId={clientId ?? ""} />
         {connectionsResponse.connections.length ? (
           <>
             <HeightData height={connectionsResponse.height} />

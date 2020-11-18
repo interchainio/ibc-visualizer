@@ -12,7 +12,7 @@ import { style } from "../../style";
 import { SelectConnectionId } from "./SelectConnectionId";
 
 interface ChannelsParams {
-  readonly connectionId: string;
+  readonly connectionId?: string;
 }
 
 export function Channels(): JSX.Element {
@@ -53,7 +53,7 @@ export function Channels(): JSX.Element {
       <Navigation />
       <div>
         <span className={style.title}>Channels</span>
-        <SelectConnectionId connectionId={connectionId} />
+        <SelectConnectionId connectionId={connectionId ?? ""} />
         {channelsResponse.channels.length ? (
           <>
             <HeightData height={channelsResponse.height} />
