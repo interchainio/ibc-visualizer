@@ -28,7 +28,13 @@ export function SequenceForm({ sequence, setSequence }: SequenceFormProps): JSX.
       <label htmlFor="sequence" className="text-lg font-bold">
         Sequence for unreceived:
       </label>
-      <input name="sequence" ref={inputRef} onChange={handleSequenceInput} className={style.input} />
+      <input
+        type="number"
+        name="sequence"
+        ref={inputRef}
+        onChange={handleSequenceInput}
+        className={style.input}
+      />
       <button
         onClick={(event) => {
           event.preventDefault();
