@@ -1,6 +1,6 @@
 # IBC Visualizer
 
-A visualizer for IBC queries
+A visualizer for [IBC](https://docs.cosmos.network/master/ibc/overview.html) queries
 
 ## Views
 
