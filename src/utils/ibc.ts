@@ -1,6 +1,6 @@
 import { IbcChannelState, IbcConnectionState, IbcOrder } from "../types/ibc";
 
-export function printIbcConnectionState(state: number): string {
+export function printIbcConnectionState(state: IbcConnectionState): string {
   switch (state) {
     case IbcConnectionState.STATE_INIT:
       return "Initial";
@@ -13,7 +13,7 @@ export function printIbcConnectionState(state: number): string {
   }
 }
 
-export function printIbcChannelState(state: number): string {
+export function printIbcChannelState(state: IbcChannelState): string {
   switch (state) {
     case IbcChannelState.STATE_INIT:
       return "Initial";
@@ -28,7 +28,7 @@ export function printIbcChannelState(state: number): string {
   }
 }
 
-export function printIbcOrder(order: number): string {
+export function printIbcOrder(order: IbcOrder): string {
   switch (order) {
     case IbcOrder.ORDER_UNORDERED:
       return "Unordered";
