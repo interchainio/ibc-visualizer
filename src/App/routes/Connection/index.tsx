@@ -18,12 +18,12 @@ export function Connection(): JSX.Element {
   const { connectionId } = useParams<ConnectionParams>();
   const { getClient } = useClient();
 
-  const [connectionResponse, setConnectionResponse] = useState(new IbcConnectionResponse());
+  const [connectionResponse, setConnectionResponse] = useState<IbcConnectionResponse>();
 
   useEffect(() => {
     (async function updateConnectionResponse() {
       const connectionResponse = await getClient().ibc.unverified.connection(connectionId);
-      setConnectionResponse(new IbcConnectionResponse(connectionResponse));
+      setConnectionResponse(connectionResponse);
     })();
   }, [getClient, connectionId]);
 
@@ -34,7 +34,7 @@ export function Connection(): JSX.Element {
       {connectionId ? <span>Connection ID: {connectionId}</span> : null}
       {connectionResponse ? (
         <>
-          <span>Proof: {connectionResponse.proof.length ? toHex(connectionResponse.proof) : "–"}</span>
+          <span>Proof: {connectionResponse.proof?.length ? toHex(connectionResponse.proof) : "–"}</span>
           <HeightData height={connectionResponse.proofHeight} />
           {connectionResponse.connection ? (
             <div className="flex flex-col">
