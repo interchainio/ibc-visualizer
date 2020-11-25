@@ -19,7 +19,7 @@ export function Acknowledgement(): JSX.Element {
   const { portId, channelId, sequence } = useParams<AcknowledgementParams>();
   const { getClient } = useClient();
 
-  const [ackResponse, setAckResponse] = useState(new IbcPacketAcknowledgementResponse());
+  const [ackResponse, setAckResponse] = useState<IbcPacketAcknowledgementResponse>();
 
   useEffect(() => {
     const sequenceNumber = Number.parseInt(sequence, 10);
@@ -30,7 +30,7 @@ export function Acknowledgement(): JSX.Element {
         channelId,
         sequenceNumber,
       );
-      setAckResponse(new IbcPacketAcknowledgementResponse(ackResponse));
+      setAckResponse(ackResponse);
     })();
   }, [sequence, getClient, portId, channelId]);
 
@@ -44,9 +44,9 @@ export function Acknowledgement(): JSX.Element {
       {portId ? <span>Port ID: {portId}</span> : null}
       {channelId ? <span>Channel ID: {channelId}</span> : null}
       {sequence ? <span>Sequence: {sequence}</span> : null}
-      {ackResponse.acknowledgement ? (
+      {ackResponse?.acknowledgement ? (
         <div className="flex flex-col">
-          <span>Proof: {ackResponse.proof.length ? toHex(ackResponse.proof) : "–"}</span>
+          <span>Proof: {ackResponse.proof?.length ? toHex(ackResponse.proof) : "–"}</span>
           <HeightData height={ackResponse.proofHeight} />
           <span>Data: {toHex(ackResponse.acknowledgement)}</span>
         </div>
