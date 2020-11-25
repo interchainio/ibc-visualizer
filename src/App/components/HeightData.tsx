@@ -1,10 +1,10 @@
-import { ibc } from "@cosmjs/stargate/types/codec";
 import React from "react";
 
+import { IbcHeight } from "../../types/ibc";
 import { style } from "../style";
 
 interface HeightDataProps {
-  readonly height?: ibc.core.client.v1.IHeight | null;
+  readonly height?: IbcHeight | null;
 }
 
 export function HeightData({ height }: HeightDataProps): JSX.Element {
