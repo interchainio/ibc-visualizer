@@ -13,10 +13,7 @@ const coralnet: AppConfig = {
   rpcUrl: "https://rpc.coralnet.cosmwasm.com",
 };
 
-const configs: NetworkConfigs = {
-  ["local"]: local,
-  ["coralnet"]: coralnet,
-};
+const configs: NetworkConfigs = { local, coralnet };
 
 function getAppConfig(): AppConfig {
   const network = process.env.REACT_APP_NETWORK;
