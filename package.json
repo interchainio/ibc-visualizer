@@ -32,8 +32,7 @@
     "build": "react-scripts build",
     "prestart": "yarn run build:tailwind",
     "start": "react-scripts start",
-    "prestart:coralnet": "yarn run prestart",
-    "start:coralnet": "REACT_APP_NETWORK=coralnet yarn run start",
+    "start:musselnet": "REACT_APP_NETWORK=musselnet yarn start",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
