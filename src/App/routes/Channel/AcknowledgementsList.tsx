@@ -13,9 +13,9 @@ interface AcknowledgementsListProps {
 
 export function AcknowledgementsList({ portId, channelId }: AcknowledgementsListProps): JSX.Element {
   const { getClient } = useClient();
-  const [packetAcknowledgementsResponse, setPacketAcknowledgementsResponse] = useState(
-    new IbcPacketAcknowledgementsResponse(),
-  );
+  const [packetAcknowledgementsResponse, setPacketAcknowledgementsResponse] = useState<
+    IbcPacketAcknowledgementsResponse
+  >();
 
   useEffect(() => {
     (async function updatePacketAcknowledgementsResponse() {
@@ -23,11 +23,11 @@ export function AcknowledgementsList({ portId, channelId }: AcknowledgementsList
         portId,
         channelId,
       );
-      setPacketAcknowledgementsResponse(new IbcPacketAcknowledgementsResponse(acketAcknowledgementsResponse));
+      setPacketAcknowledgementsResponse(acketAcknowledgementsResponse);
     })();
   }, [getClient, portId, channelId]);
 
-  return packetAcknowledgementsResponse.acknowledgements.length ? (
+  return packetAcknowledgementsResponse?.acknowledgements?.length ? (
     <div className="flex flex-col m-2 ml-0">
       <span className={style.subtitle}>Packet acknowledgements</span>
       <div className="flex flex-row flex-wrap">

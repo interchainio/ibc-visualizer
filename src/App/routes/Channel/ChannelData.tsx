@@ -15,18 +15,18 @@ interface ChannelDataProps {
 
 export function ChannelData({ portId, channelId }: ChannelDataProps): JSX.Element {
   const { getClient } = useClient();
-  const [channelResponse, setChannelResponse] = useState(new IbcChannelResponse());
+  const [channelResponse, setChannelResponse] = useState<IbcChannelResponse>();
 
   useEffect(() => {
     (async function updateChannelResponse() {
       const channelResponse = await getClient().ibc.unverified.channel(portId, channelId);
-      setChannelResponse(new IbcChannelResponse(channelResponse));
+      setChannelResponse(channelResponse);
     })();
   }, [getClient, portId, channelId]);
 
-  return channelResponse.channel ? (
+  return channelResponse?.channel ? (
     <div>
-      <span>Proof: {channelResponse.proof.length ? toHex(channelResponse.proof) : "–"}</span>
+      <span>Proof: {channelResponse.proof?.length ? toHex(channelResponse.proof) : "–"}</span>
       <HeightData height={channelResponse.proofHeight} />
       <div className="flex flex-col">
         <span>

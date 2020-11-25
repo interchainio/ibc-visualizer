@@ -12,18 +12,18 @@ interface UnreceivedAcksListProps {
 
 export function UnreceivedAcksList({ portId, channelId, sequence }: UnreceivedAcksListProps): JSX.Element {
   const { getClient } = useClient();
-  const [unreceivedAcksResponse, setUnreceivedAcksResponse] = useState(new IbcUnreceivedAcksResponse());
+  const [unreceivedAcksResponse, setUnreceivedAcksResponse] = useState<IbcUnreceivedAcksResponse>();
 
   useEffect(() => {
     (async function updateUnreceivedAcksResponse() {
       const unreceivedAcksResponse = await getClient().ibc.unverified.unreceivedAcks(portId, channelId, [
         sequence,
       ]);
-      setUnreceivedAcksResponse(new IbcUnreceivedAcksResponse(unreceivedAcksResponse));
+      setUnreceivedAcksResponse(unreceivedAcksResponse);
     })();
   }, [getClient, portId, channelId, sequence]);
 
-  return unreceivedAcksResponse.sequences.length ? (
+  return unreceivedAcksResponse?.sequences?.length ? (
     <div className="flex flex-col m-2 ml-0">
       <span className={style.subtitle}>Unreceived acknowledgements</span>
       <div className="flex flex-row flex-wrap">

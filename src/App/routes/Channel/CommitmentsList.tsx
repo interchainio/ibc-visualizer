@@ -13,18 +13,16 @@ interface CommitmentsListProps {
 
 export function CommitmentsList({ portId, channelId }: CommitmentsListProps): JSX.Element {
   const { getClient } = useClient();
-  const [packetCommitmentsResponse, setPacketCommitmentsResponse] = useState(
-    new IbcPacketCommitmentsResponse(),
-  );
+  const [packetCommitmentsResponse, setPacketCommitmentsResponse] = useState<IbcPacketCommitmentsResponse>();
 
   useEffect(() => {
     (async function updatePacketCommitmentsResponse() {
       const packetCommitmentsResponse = await getClient().ibc.unverified.packetCommitments(portId, channelId);
-      setPacketCommitmentsResponse(new IbcPacketCommitmentsResponse(packetCommitmentsResponse));
+      setPacketCommitmentsResponse(packetCommitmentsResponse);
     })();
   }, [getClient, portId, channelId]);
 
-  return packetCommitmentsResponse.commitments.length ? (
+  return packetCommitmentsResponse?.commitments?.length ? (
     <div className="flex flex-col m-2 ml-0">
       <span className={style.subtitle}>Packet commitments</span>
       <div className="flex flex-row flex-wrap">

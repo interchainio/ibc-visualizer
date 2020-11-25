@@ -11,9 +11,9 @@ interface NextSequenceReceiveDataProps {
 
 export function NextSequenceReceiveData({ portId, channelId }: NextSequenceReceiveDataProps): JSX.Element {
   const { getClient } = useClient();
-  const [nextSequenceReceiveResponse, setNextSequenceReceiveResponse] = useState(
-    new IbcNextSequenceReceiveResponse(),
-  );
+  const [nextSequenceReceiveResponse, setNextSequenceReceiveResponse] = useState<
+    IbcNextSequenceReceiveResponse
+  >();
 
   useEffect(() => {
     (async function updateNextSequenceReceiveResponse() {
@@ -21,7 +21,7 @@ export function NextSequenceReceiveData({ portId, channelId }: NextSequenceRecei
         portId,
         channelId,
       );
-      setNextSequenceReceiveResponse(new IbcNextSequenceReceiveResponse(nextSequenceReceiveResponse));
+      setNextSequenceReceiveResponse(nextSequenceReceiveResponse);
     })();
   }, [getClient, portId, channelId]);
 
@@ -29,7 +29,7 @@ export function NextSequenceReceiveData({ portId, channelId }: NextSequenceRecei
     <div className="flex flex-col m-2 ml-0">
       <span>
         Next sequence receive proof:{" "}
-        {nextSequenceReceiveResponse.proof.length ? toHex(nextSequenceReceiveResponse.proof) : "–"}
+        {nextSequenceReceiveResponse.proof?.length ? toHex(nextSequenceReceiveResponse.proof) : "–"}
       </span>
       <span>
         Next sequence receive:{" "}
