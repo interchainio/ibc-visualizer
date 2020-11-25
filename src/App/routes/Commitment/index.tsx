@@ -19,7 +19,7 @@ export function Commitment(): JSX.Element {
   const { portId, channelId, sequence } = useParams<CommitmentParams>();
   const { getClient } = useClient();
 
-  const [commitmentResponse, setCommitmentResponse] = useState(new IbcPacketCommitmentResponse());
+  const [commitmentResponse, setCommitmentResponse] = useState<IbcPacketCommitmentResponse>();
 
   useEffect(() => {
     const sequenceNumber = Number.parseInt(sequence, 10);
@@ -30,7 +30,7 @@ export function Commitment(): JSX.Element {
         channelId,
         sequenceNumber,
       );
-      setCommitmentResponse(new IbcPacketCommitmentResponse(commitmentResponse));
+      setCommitmentResponse(commitmentResponse);
     })();
   }, [sequence, getClient, portId, channelId]);
 
@@ -44,9 +44,9 @@ export function Commitment(): JSX.Element {
       {portId ? <span>Port ID: {portId}</span> : null}
       {channelId ? <span>Channel ID: {channelId}</span> : null}
       {sequence ? <span>Sequence: {sequence}</span> : null}
-      {commitmentResponse.commitment ? (
+      {commitmentResponse?.commitment ? (
         <div className="flex flex-col">
-          <span>Proof: {commitmentResponse.proof.length ? toHex(commitmentResponse.proof) : "–"}</span>
+          <span>Proof: {commitmentResponse.proof?.length ? toHex(commitmentResponse.proof) : "–"}</span>
           <HeightData height={commitmentResponse.proofHeight} />
           <span>Data: {toHex(commitmentResponse.commitment)}</span>
         </div>
