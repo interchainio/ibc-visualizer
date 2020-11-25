@@ -1,4 +1,3 @@
-import { ibc } from "@cosmjs/stargate/types/codec";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
@@ -19,11 +18,11 @@ export function Connections(): JSX.Element {
   const { clientId } = useParams<ConnectionsParams>();
   const { getClient } = useClient();
 
-  const [connectionsResponse, setConnectionsResponse] = useState(new IbcConnectionsResponse());
+  const [connectionsResponse, setConnectionsResponse] = useState<IbcConnectionsResponse>();
 
   useEffect(() => {
     (async function updateConnectionsResponse() {
-      const connectionsResponse = new IbcConnectionsResponse(await getClient().ibc.unverified.connections());
+      const connectionsResponse = await getClient().ibc.unverified.connections();
 
       if (clientId) {
         try {
@@ -32,7 +31,7 @@ export function Connections(): JSX.Element {
             ? await Promise.all(
                 connectionPaths.map(async (connectionId) => {
                   const connectionResponse = await getClient().ibc.unverified.connection(connectionId);
-                  const connection: ibc.core.connection.v1.IIdentifiedConnection = connectionResponse.connection
+                  const connection = connectionResponse.connection
                     ? { ...connectionResponse, id: connectionId }
                     : { id: connectionId };
 
@@ -52,15 +51,18 @@ export function Connections(): JSX.Element {
   }, [getClient, clientId]);
 
   async function loadMoreConnections(): Promise<void> {
-    if (!connectionsResponse.pagination?.nextKey) return;
+    if (!connectionsResponse?.pagination?.nextKey) return;
 
-    const newConnectionsResponse = new IbcConnectionsResponse(
-      await getClient().ibc.unverified.connections(connectionsResponse.pagination.nextKey),
+    const newConnectionsResponse = await getClient().ibc.unverified.connections(
+      connectionsResponse.pagination.nextKey,
     );
+
+    const oldConnections = connectionsResponse.connections ?? [];
+    const newConnections = newConnectionsResponse.connections ?? [];
 
     setConnectionsResponse({
       ...newConnectionsResponse,
-      connections: [...connectionsResponse.connections, ...newConnectionsResponse.connections],
+      connections: [...oldConnections, ...newConnections],
     });
   }
 
@@ -70,7 +72,7 @@ export function Connections(): JSX.Element {
       <div>
         <span className={style.title}>Connections</span>
         <SelectClientId clientId={clientId ?? ""} />
-        {connectionsResponse.connections.length ? (
+        {connectionsResponse?.connections?.length ? (
           <>
             <HeightData height={connectionsResponse.height} />
             <div className="flex flex-row flex-wrap">
