@@ -1,9 +1,8 @@
-import { ibc } from "@cosmjs/stargate/types/codec";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import { useClient } from "../../../contexts/ClientContext";
-import { IbcChannelsResponse } from "../../../types/ibc";
+import { IbcChannelsResponse, IbcConnectionChannelsResponse } from "../../../types/ibc";
 import { ellideMiddle } from "../../../utils/strings";
 import { HeightData } from "../../components/HeightData";
 import { Navigation } from "../../components/Navigation";
@@ -20,31 +19,34 @@ export function Channels(): JSX.Element {
   const { getClient } = useClient();
 
   const [channelsResponse, setChannelsResponse] = useState<
-    ibc.core.channel.v1.QueryChannelsResponse | ibc.core.channel.v1.QueryConnectionChannelsResponse
-  >(new IbcChannelsResponse());
+    IbcChannelsResponse | IbcConnectionChannelsResponse
+  >();
 
   useEffect(() => {
     (async function updateChannelsResponse() {
       if (connectionId) {
         const channelsResponse = await getClient().ibc.unverified.connectionChannels(connectionId);
-        setChannelsResponse(new IbcChannelsResponse(channelsResponse));
+        setChannelsResponse(channelsResponse);
       } else {
         const channelsResponse = await getClient().ibc.unverified.channels();
-        setChannelsResponse(new IbcChannelsResponse(channelsResponse));
+        setChannelsResponse(channelsResponse);
       }
     })();
   }, [connectionId, getClient]);
 
   async function loadMoreChannels(): Promise<void> {
-    if (!channelsResponse.pagination?.nextKey) return;
+    if (!channelsResponse?.pagination?.nextKey) return;
 
-    const newChannelsResponse = new IbcChannelsResponse(
-      await getClient().ibc.unverified.channels(channelsResponse.pagination.nextKey),
+    const newChannelsResponse = await getClient().ibc.unverified.channels(
+      channelsResponse.pagination.nextKey,
     );
+
+    const oldChannels = channelsResponse.channels ?? [];
+    const newChannels = newChannelsResponse.channels ?? [];
 
     setChannelsResponse({
       ...newChannelsResponse,
-      channels: [...channelsResponse.channels, ...newChannelsResponse.channels],
+      channels: [...oldChannels, ...newChannels],
     });
   }
 
@@ -54,7 +56,7 @@ export function Channels(): JSX.Element {
       <div>
         <span className={style.title}>Channels</span>
         <SelectConnectionId connectionId={connectionId ?? ""} />
-        {channelsResponse.channels.length ? (
+        {channelsResponse?.channels?.length ? (
           <>
             <HeightData height={channelsResponse.height} />
             <div className="flex flex-row flex-wrap">
