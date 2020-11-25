@@ -1,11 +1,11 @@
 import { toHex } from "@cosmjs/encoding";
-import { ibc } from "@cosmjs/stargate/types/codec";
 import React from "react";
 
+import { IbcChannelCounterparty, IbcConnectionCounterparty } from "../../types/ibc";
 import { style } from "../style";
 
 interface CounterpartyDataProps {
-  readonly counterparty?: (ibc.core.connection.v1.ICounterparty & ibc.core.channel.v1.ICounterparty) | null;
+  readonly counterparty?: (IbcConnectionCounterparty & IbcChannelCounterparty) | null;
 }
 
 export function CounterpartyData({ counterparty }: CounterpartyDataProps): JSX.Element {
