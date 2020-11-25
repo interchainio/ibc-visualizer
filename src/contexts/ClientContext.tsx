@@ -1,5 +1,5 @@
 import { IbcExtension, QueryClient, setupIbcExtension } from "@cosmjs/stargate";
-import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
+import { adaptor34, Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 import React, { useEffect } from "react";
 
 import { config } from "../config";
@@ -28,7 +28,7 @@ export function ClientProvider({ children }: React.HTMLAttributes<HTMLOrSVGEleme
 
   useEffect(() => {
     (async function updateTmClient() {
-      const tmClient = await TendermintClient.connect(config.rpcUrl);
+      const tmClient = await TendermintClient.connect(config.rpcUrl, adaptor34);
       setTmClient(tmClient);
     })();
   }, []);
