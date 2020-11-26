@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import { useClient } from "../../../contexts/ClientContext";
 import { IbcPacketCommitmentsResponse } from "../../../types/ibc";
-import { pathCommitment } from "../../paths";
+import { pathCommitments, pathConnections, pathSequences } from "../../paths";
 import { style } from "../../style";
 
 interface CommitmentsListProps {
@@ -28,7 +28,7 @@ export function CommitmentsList({ portId, channelId }: CommitmentsListProps): JS
       <div className="flex flex-row flex-wrap">
         {packetCommitmentsResponse.commitments.map((commitment, index) => (
           <Link
-            to={`${pathCommitment}/${portId}/${channelId}/${commitment.sequence}`}
+            to={`${pathConnections}/${commitment.channelId}${pathCommitments}/${commitment.portId}${pathSequences}/${commitment.sequence}`}
             key={index}
             className={style.button}
           >

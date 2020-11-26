@@ -12,12 +12,12 @@ import { UnreceivedAcksList } from "./UnreceivedAcksList";
 import { UnreceivedPacketsList } from "./UnreceivedPacketsList";
 
 interface ChannelParams {
-  readonly portId: string;
   readonly channelId: string;
+  readonly portId: string;
 }
 
 export function Channel(): JSX.Element {
-  const { portId, channelId } = useParams<ChannelParams>();
+  const { channelId, portId } = useParams<ChannelParams>();
   const [sequence, setSequence] = useState<number>();
 
   return (

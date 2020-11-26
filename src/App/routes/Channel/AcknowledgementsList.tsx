@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import { useClient } from "../../../contexts/ClientContext";
 import { IbcPacketAcknowledgementsResponse } from "../../../types/ibc";
-import { pathAcknowledgement } from "../../paths";
+import { pathAcknowledgements, pathConnections, pathSequences } from "../../paths";
 import { style } from "../../style";
 
 interface AcknowledgementsListProps {
@@ -33,7 +33,7 @@ export function AcknowledgementsList({ portId, channelId }: AcknowledgementsList
       <div className="flex flex-row flex-wrap">
         {packetAcknowledgementsResponse.acknowledgements.map((acknowledgement, index) => (
           <Link
-            to={`${pathAcknowledgement}/${portId}/${channelId}/${acknowledgement.sequence}`}
+            to={`${pathConnections}/${acknowledgement.channelId}${pathAcknowledgements}/${acknowledgement.portId}${pathSequences}/${acknowledgement.sequence}`}
             key={index}
             className={style.button}
           >
