@@ -6,17 +6,17 @@ import { useClient } from "../../../contexts/ClientContext";
 import { IbcPacketAcknowledgementResponse } from "../../../types/ibc";
 import { HeightData } from "../../components/HeightData";
 import { Navigation } from "../../components/Navigation";
-import { pathChannel } from "../../paths";
+import { pathChannels, pathConnections } from "../../paths";
 import { style } from "../../style";
 
 interface AcknowledgementParams {
-  readonly portId: string;
   readonly channelId: string;
+  readonly portId: string;
   readonly sequence: string;
 }
 
 export function Acknowledgement(): JSX.Element {
-  const { portId, channelId, sequence } = useParams<AcknowledgementParams>();
+  const { channelId, portId, sequence } = useParams<AcknowledgementParams>();
   const { getClient } = useClient();
 
   const [ackResponse, setAckResponse] = useState<IbcPacketAcknowledgementResponse>();
@@ -37,7 +37,10 @@ export function Acknowledgement(): JSX.Element {
   return (
     <div className="container mx-auto flex flex-col">
       <Navigation />
-      <Link to={`${pathChannel}/${portId}/${channelId}`} className={`${style.button} self-start`}>
+      <Link
+        to={`${pathConnections}/${channelId}${pathChannels}/${portId}`}
+        className={`${style.button} self-start`}
+      >
         ← Back to Channel
       </Link>
       <span className={style.title}>Acknowledgement</span>
