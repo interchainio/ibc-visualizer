@@ -1,57 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { useClient } from "../../../contexts/ClientContext";
 import { IbcConnectionsResponse } from "../../../types/ibc";
 import { ellideMiddle } from "../../../utils/strings";
 import { HeightData } from "../../components/HeightData";
 import { Navigation } from "../../components/Navigation";
-import { pathConnection } from "../../paths";
+import { pathConnections } from "../../paths";
 import { style } from "../../style";
-import { SelectClientId } from "./SelectClientId";
-
-interface ConnectionsParams {
-  readonly clientId?: string;
-}
 
 export function Connections(): JSX.Element {
-  const { clientId } = useParams<ConnectionsParams>();
   const { getClient } = useClient();
 
+  const [clientIds, setClientIds] = useState<string[]>([]);
   const [connectionsResponse, setConnectionsResponse] = useState<IbcConnectionsResponse>();
 
   useEffect(() => {
     (async function updateConnectionsResponse() {
       const connectionsResponse = await getClient().ibc.unverified.connections();
-
-      if (clientId) {
-        try {
-          const { connectionPaths } = await getClient().ibc.unverified.clientConnections(clientId);
-          const connections = connectionPaths
-            ? await Promise.all(
-                connectionPaths.map(async (connectionId) => {
-                  const connectionResponse = await getClient().ibc.unverified.connection(connectionId);
-                  const connection = connectionResponse.connection
-                    ? { ...connectionResponse, id: connectionId }
-                    : { id: connectionId };
-
-                  return connection;
-                }),
-              )
-            : [];
-
-          connectionsResponse.connections = connections;
-        } catch {
-          connectionsResponse.connections = [];
-        }
-      }
-
       setConnectionsResponse(connectionsResponse);
+
+      const clientIds =
+        connectionsResponse.connections
+          ?.map((connection) => connection.clientId ?? "")
+          .filter((clientId) => clientId !== "") ?? [];
+
+      setClientIds(clientIds.sort());
     })();
-  }, [getClient, clientId]);
+  }, [getClient]);
 
   async function loadMoreConnections(): Promise<void> {
-    if (!connectionsResponse?.pagination?.nextKey) return;
+    if (!connectionsResponse?.pagination?.nextKey?.length) return;
 
     const newConnectionsResponse = await getClient().ibc.unverified.connections(
       connectionsResponse.pagination.nextKey,
@@ -64,25 +43,48 @@ export function Connections(): JSX.Element {
       ...newConnectionsResponse,
       connections: [...oldConnections, ...newConnections],
     });
+
+    const newClientIds =
+      newConnectionsResponse.connections
+        ?.map((connection) => connection.clientId ?? "")
+        .filter((clientId) => clientId !== "") ?? [];
+
+    setClientIds((oldClientIds) => {
+      // New paginated connections may be from same client as the old ones,
+      // must remove duplicate client ids
+      const mergedClientIds = [...oldClientIds, ...newClientIds];
+      const uniqueClientIds = [...new Set(mergedClientIds)];
+      const sortedClientIds = uniqueClientIds.sort();
+
+      return sortedClientIds;
+    });
   }
 
   return (
     <div className="container mx-auto">
       <Navigation />
       <div>
-        <span className={style.title}>Connections</span>
-        <SelectClientId clientId={clientId ?? ""} />
         {connectionsResponse?.connections?.length ? (
           <>
+            <span className={style.title}>Connections</span>
             <HeightData height={connectionsResponse.height} />
-            <div className="flex flex-row flex-wrap">
-              {connectionsResponse.connections.map((connection, index) => (
-                <Link to={`${pathConnection}/${connection.id}`} key={index} className={style.button}>
-                  <span>{ellideMiddle(connection.id ?? "–", 20)}</span>
-                </Link>
+            <div>
+              {clientIds.map((clientId) => (
+                <div key={clientId} className="flex flex-col items-start">
+                  <div className={style.subtitle}>Client {clientId}</div>
+                  {connectionsResponse.connections?.map((connection) => (
+                    <Link
+                      to={`${pathConnections}/${connection.id}`}
+                      key={connection.id}
+                      className={`${style.button} mt-2 block`}
+                    >
+                      Connection {ellideMiddle(connection.id ?? "–", 20)}
+                    </Link>
+                  ))}
+                </div>
               ))}
             </div>
-            {!clientId && connectionsResponse.pagination?.nextKey?.length ? (
+            {connectionsResponse.pagination?.nextKey?.length ? (
               <button onClick={loadMoreConnections}>Load more</button>
             ) : null}
           </>
