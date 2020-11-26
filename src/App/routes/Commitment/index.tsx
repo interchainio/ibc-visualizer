@@ -6,17 +6,17 @@ import { useClient } from "../../../contexts/ClientContext";
 import { IbcPacketCommitmentResponse } from "../../../types/ibc";
 import { HeightData } from "../../components/HeightData";
 import { Navigation } from "../../components/Navigation";
-import { pathChannel } from "../../paths";
+import { pathChannels, pathConnections } from "../../paths";
 import { style } from "../../style";
 
 interface CommitmentParams {
-  readonly portId: string;
   readonly channelId: string;
+  readonly portId: string;
   readonly sequence: string;
 }
 
 export function Commitment(): JSX.Element {
-  const { portId, channelId, sequence } = useParams<CommitmentParams>();
+  const { channelId, portId, sequence } = useParams<CommitmentParams>();
   const { getClient } = useClient();
 
   const [commitmentResponse, setCommitmentResponse] = useState<IbcPacketCommitmentResponse>();
@@ -37,7 +37,10 @@ export function Commitment(): JSX.Element {
   return (
     <div className="container mx-auto flex flex-col">
       <Navigation />
-      <Link to={`${pathChannel}/${portId}/${channelId}`} className={`${style.button} self-start`}>
+      <Link
+        to={`${pathConnections}/${channelId}${pathChannels}/${portId}`}
+        className={`${style.button} self-start`}
+      >
         ← Back to Channel
       </Link>
       <span className={style.title}>Commitment</span>
