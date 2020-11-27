@@ -25,9 +25,9 @@ export function ConnectionData({ connectionId }: ConnectionDataProps): JSX.Eleme
 
   return connectionResponse?.connection ? (
     <div>
-      <span className={style.title}>Connection</span>
-      {connectionId ? <span>Connection ID: {connectionId}</span> : null}
-      <span>Proof: {connectionResponse.proof?.length ? toHex(connectionResponse.proof) : "–"}</span>
+      <div className={style.title}>Data</div>
+      {connectionId ? <div>Connection ID: {connectionId}</div> : null}
+      <div>Proof: {connectionResponse.proof?.length ? toHex(connectionResponse.proof) : "–"}</div>
       <HeightData height={connectionResponse.proofHeight} />
       <div className="flex flex-col">
         <span>Client ID: {connectionResponse.connection.clientId ?? "–"}</span>

@@ -66,7 +66,7 @@ export function Connections(): JSX.Element {
       <div>
         {connectionsResponse?.connections?.length ? (
           <>
-            <span className={style.title}>Connections</span>
+            <span className={style.title}>Connections / client</span>
             <HeightData height={connectionsResponse.height} />
             <div>
               {clientIds.map((clientId) => (

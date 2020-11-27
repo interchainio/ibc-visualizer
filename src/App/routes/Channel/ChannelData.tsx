@@ -26,7 +26,10 @@ export function ChannelData({ portId, channelId }: ChannelDataProps): JSX.Elemen
 
   return channelResponse?.channel ? (
     <div>
-      <span>Proof: {channelResponse.proof?.length ? toHex(channelResponse.proof) : "–"}</span>
+      <div className={style.title}>Data</div>
+      {portId ? <div>Port ID: {portId}</div> : null}
+      {channelId ? <div>Channel ID: {channelId}</div> : null}
+      <div>Proof: {channelResponse.proof?.length ? toHex(channelResponse.proof) : "–"}</div>
       <HeightData height={channelResponse.proofHeight} />
       <div className="flex flex-col">
         <span>

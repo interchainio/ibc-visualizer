@@ -37,13 +37,7 @@ export function Commitment(): JSX.Element {
   return (
     <div className="container mx-auto flex flex-col">
       <Navigation />
-      <Link
-        to={`${pathConnections}/${channelId}${pathChannels}/${portId}`}
-        className={`${style.button} self-start`}
-      >
-        ← Back to Channel
-      </Link>
-      <span className={style.title}>Commitment</span>
+      <span className={style.title}>Data</span>
       {portId ? <span>Port ID: {portId}</span> : null}
       {channelId ? <span>Channel ID: {channelId}</span> : null}
       {sequence ? <span>Sequence: {sequence}</span> : null}
