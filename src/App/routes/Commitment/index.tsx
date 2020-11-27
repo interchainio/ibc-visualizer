@@ -1,24 +1,24 @@
 import { toHex } from "@cosmjs/encoding";
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
+import { portIdChannelIdSeparator } from "../..";
 import { useClient } from "../../../contexts/ClientContext";
 import { IbcPacketCommitmentResponse } from "../../../types/ibc";
 import { HeightData } from "../../components/HeightData";
 import { Navigation } from "../../components/Navigation";
-import { pathChannels, pathConnections } from "../../paths";
 import { style } from "../../style";
 
 interface CommitmentParams {
-  readonly channelId: string;
-  readonly portId: string;
+  readonly portIdChannelId: string;
   readonly sequence: string;
 }
 
 export function Commitment(): JSX.Element {
-  const { channelId, portId, sequence } = useParams<CommitmentParams>();
-  const { getClient } = useClient();
+  const { portIdChannelId, sequence } = useParams<CommitmentParams>();
+  const [portId, channelId] = portIdChannelId.split(portIdChannelIdSeparator);
 
+  const { getClient } = useClient();
   const [commitmentResponse, setCommitmentResponse] = useState<IbcPacketCommitmentResponse>();
 
   useEffect(() => {

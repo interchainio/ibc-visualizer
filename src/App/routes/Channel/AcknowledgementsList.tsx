@@ -1,17 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+import { portIdChannelIdSeparator } from "../..";
 import { useClient } from "../../../contexts/ClientContext";
 import { IbcPacketAcknowledgementsResponse } from "../../../types/ibc";
-import { pathAcknowledgements, pathConnections, pathSequences } from "../../paths";
+import { pathAcknowledgements, pathChannels, pathConnections } from "../../paths";
 import { style } from "../../style";
 
 interface AcknowledgementsListProps {
+  readonly connectionId: string;
   readonly portId: string;
   readonly channelId: string;
 }
 
-export function AcknowledgementsList({ portId, channelId }: AcknowledgementsListProps): JSX.Element {
+export function AcknowledgementsList({
+  connectionId,
+  portId,
+  channelId,
+}: AcknowledgementsListProps): JSX.Element {
+  const paramConnection = `${pathConnections}/${connectionId}`;
+
   const { getClient } = useClient();
   const [packetAcknowledgementsResponse, setPacketAcknowledgementsResponse] = useState<
     IbcPacketAcknowledgementsResponse
@@ -31,15 +39,21 @@ export function AcknowledgementsList({ portId, channelId }: AcknowledgementsList
     <div className="flex flex-col m-2 ml-0">
       <span className={style.subtitle}>Packet acknowledgements</span>
       <div className="flex flex-row flex-wrap">
-        {packetAcknowledgementsResponse.acknowledgements.map((acknowledgement, index) => (
-          <Link
-            to={`${pathConnections}/${acknowledgement.channelId}${pathAcknowledgements}/${acknowledgement.portId}${pathSequences}/${acknowledgement.sequence}`}
-            key={index}
-            className={style.button}
-          >
-            <span>Sequence: {acknowledgement.sequence ? acknowledgement.sequence.toString(10) : "–"}</span>
-          </Link>
-        ))}
+        {packetAcknowledgementsResponse.acknowledgements.map((acknowledgement, index) => {
+          const portIdChannelId = `${acknowledgement.portId}${portIdChannelIdSeparator}${acknowledgement.channelId}`;
+          const paramChannel = `${pathChannels}/${portIdChannelId}`;
+          const paramAcknowledgement = `${pathAcknowledgements}/${acknowledgement.sequence}`;
+
+          return (
+            <Link
+              to={`${paramConnection}${paramChannel}${paramAcknowledgement}`}
+              key={index}
+              className={style.button}
+            >
+              <span>Sequence: {acknowledgement.sequence ? acknowledgement.sequence.toString(10) : "–"}</span>
+            </Link>
+          );
+        })}
       </div>
     </div>
   ) : (

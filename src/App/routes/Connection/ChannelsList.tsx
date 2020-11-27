@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+import { portIdChannelIdSeparator } from "../..";
 import { useClient } from "../../../contexts/ClientContext";
 import { IbcChannelsResponse, IbcConnectionChannelsResponse } from "../../../types/ibc";
 import { ellideMiddle } from "../../../utils/strings";
@@ -12,8 +13,9 @@ interface ChannelsListProps {
 }
 
 export function ChannelsList({ connectionId }: ChannelsListProps): JSX.Element {
-  const { getClient } = useClient();
+  const paramConnection = `${pathConnections}/${connectionId}`;
 
+  const { getClient } = useClient();
   const [channelsResponse, setChannelsResponse] = useState<
     IbcChannelsResponse | IbcConnectionChannelsResponse
   >();
@@ -46,18 +48,19 @@ export function ChannelsList({ connectionId }: ChannelsListProps): JSX.Element {
     <div>
       <span className={style.title}>Channels</span>
       <div className="flex flex-row flex-wrap">
-        {channelsResponse.channels.map((channel, index) => (
-          <Link
-            to={`${pathConnections}/${channel.channelId}${pathChannels}/${channel.portId}`}
-            key={index}
-            className={style.button}
-          >
-            <span>{`${ellideMiddle(channel.portId ?? "–", 20)} | ${ellideMiddle(
-              channel.channelId ?? "–",
-              20,
-            )}`}</span>
-          </Link>
-        ))}
+        {channelsResponse.channels.map((channel, index) => {
+          const portIdChannelId = `${channel.portId}${portIdChannelIdSeparator}${channel.channelId}`;
+          const paramChannel = `${pathChannels}/${portIdChannelId}`;
+
+          return (
+            <Link to={`${paramConnection}${paramChannel}`} key={index} className={style.button}>
+              <span>{`${ellideMiddle(channel.portId ?? "–", 20)} | ${ellideMiddle(
+                channel.channelId ?? "–",
+                20,
+              )}`}</span>
+            </Link>
+          );
+        })}
       </div>
       {channelsResponse.pagination?.nextKey?.length ? (
         <button onClick={loadMoreChannels} className={style.button}>
