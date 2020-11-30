@@ -2,33 +2,41 @@
 
 A visualizer for [IBC](https://github.com/cosmos/ics/tree/master/ibc) queries
 
+## How to run local demo
+
+1. Make sure Docker is installed in your system
+2. Clone [CosmJS](https://github.com/cosmos/cosmjs)
+3. In the `cosmjs/scripts/simapp` directory, run:
+   ```shell
+   ./start.sh
+   ```
+4. In the `ibc-visualizer` project root, run:
+   ```shell
+   yarn install
+   yarn start
+   ```
+
 ## Views
 
-Every view has two navigation buttons to the `Connections` and `Channels` view, and a `Height` section from the current query.
+Every view has navigation breadcrumbs with links to the previous views.
 
 ### Connections
 
-The `Connections` view lists all the connections and lets the user filter by `Client ID`. Each listed connection is a button that redirects to the corresponding `Connection` view.
+The `Connections` view lists all the connections grouped by client. Each listed connection is a link that redirects to the corresponding `Connection` view.
 
 ![connections](screenshots/connections.png)
 
 ### Connection
 
-This view shows details for the chosen connection.
+This view shows details for the chosen connection and lists all its channels. Each listed channel is a link that redirects to the corresponding `Channel` view.
 
 ![connection](screenshots/connection.png)
-
-### Channels
-
-The `Channels` view lists all the channels and lets the user filter by `Connection ID`. Each listed channel is a button that redirects to the corresponding `Channel` view.
-
-![channels](screenshots/channels.png)
 
 ### Channel
 
 This view shows details for the chosen channel.
 
-The lists of packet commitments and acknowledgements have buttons that let the user go to the corresponding `Commitment` or `Acknowledgement` view.
+The lists of packet commitments and acknowledgements have links that let the user go to the corresponding `Commitment` or `Acknowledgement` view.
 
 There is a form for entering the sequence number with which to query the unreceived packets and acknowledgements.
 
