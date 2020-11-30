@@ -49,5 +49,11 @@ export function ClientProvider({ children }: React.HTMLAttributes<HTMLOrSVGEleme
     setLoaded(true);
   }, [ibcClient, tmClient]);
 
-  return loaded ? <ClientContext.Provider value={value}>{children}</ClientContext.Provider> : <></>;
+  return loaded ? (
+    <ClientContext.Provider value={value}>{children}</ClientContext.Provider>
+  ) : (
+    <div className="container mx-auto">
+      Network error: please run a local chain and/or make sure the network configuration is correct
+    </div>
+  );
 }
