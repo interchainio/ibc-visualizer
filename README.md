@@ -1,46 +1,47 @@
-# Getting Started with Create React App
+# IBC Visualizer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A visualizer for [IBC](https://github.com/cosmos/ics/tree/master/ibc) queries
 
-## Available Scripts
+## Views
 
-In the project directory, you can run:
+Every view has two navigation buttons to the `Connections` and `Channels` view, and a `Height` section from the current query.
 
-### `yarn start`
+### Connections
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The `Connections` view lists all the connections and lets the user filter by `Client ID`. Each listed connection is a button that redirects to the corresponding `Connection` view.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+![connections](screenshots/connections.png)
 
-### `yarn test`
+### Connection
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+This view shows details for the chosen connection.
 
-### `yarn build`
+![connection](screenshots/connection.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Channels
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The `Channels` view lists all the channels and lets the user filter by `Connection ID`. Each listed channel is a button that redirects to the corresponding `Channel` view.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+![channels](screenshots/channels.png)
 
-### `yarn eject`
+### Channel
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+This view shows details for the chosen channel.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The lists of packet commitments and acknowledgements have buttons that let the user go to the corresponding `Commitment` or `Acknowledgement` view.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+There is a form for entering the sequence number with which to query the unreceived packets and acknowledgements.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+![channel](screenshots/channel.png)
 
-## Learn More
+### Commitment
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+This view shows details for the chosen commitment.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+![commitment](screenshots/commitment.png)
+
+### Acknowledgement
+
+This view shows details for the chosen acknowledgement.
+
+![acknowledgement](screenshots/acknowledgement.png)
