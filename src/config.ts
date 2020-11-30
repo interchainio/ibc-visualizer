@@ -5,6 +5,8 @@ interface NetworkConfigs {
   readonly [key: string]: AppConfig;
 }
 
+// Configuration for CosmJS development chain simapp.
+// See https://github.com/cosmos/cosmjs/tree/master/scripts/simapp.
 const local: AppConfig = {
   rpcUrl: "http://localhost:26658",
 };
