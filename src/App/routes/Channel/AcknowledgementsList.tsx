@@ -48,7 +48,7 @@ export function AcknowledgementsList({
             <Link
               to={`${paramConnection}${paramChannel}${paramAcknowledgement}`}
               key={index}
-              className={style.button}
+              className={style.link}
             >
               <span>Sequence: {acknowledgement.sequence ? acknowledgement.sequence.toString(10) : "–"}</span>
             </Link>
