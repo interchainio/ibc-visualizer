@@ -53,7 +53,7 @@ export function ChannelsList({ connectionId }: ChannelsListProps): JSX.Element {
           const paramChannel = `${pathChannels}/${portIdChannelId}`;
 
           return (
-            <Link to={`${paramConnection}${paramChannel}`} key={index} className={style.button}>
+            <Link to={`${paramConnection}${paramChannel}`} key={index} className={style.link}>
               <span>{`${ellideMiddle(channel.portId ?? "–", 20)} | ${ellideMiddle(
                 channel.channelId ?? "–",
                 20,
@@ -63,7 +63,7 @@ export function ChannelsList({ connectionId }: ChannelsListProps): JSX.Element {
         })}
       </div>
       {channelsResponse.pagination?.nextKey?.length ? (
-        <button onClick={loadMoreChannels} className={style.button}>
+        <button onClick={loadMoreChannels} className={style.link}>
           Load more
         </button>
       ) : null}

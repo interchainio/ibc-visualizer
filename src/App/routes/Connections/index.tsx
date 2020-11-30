@@ -78,7 +78,7 @@ export function Connections(): JSX.Element {
                         <Link
                           to={`${pathConnections}/${connection.id}`}
                           key={connection.id}
-                          className={`${style.button} mt-2 block`}
+                          className={`${style.link} mt-2 block`}
                         >
                           Connection {ellideMiddle(connection.id ?? "–", 20)}
                         </Link>

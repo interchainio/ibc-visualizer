@@ -39,7 +39,7 @@ export function CommitmentsList({ connectionId, portId, channelId }: Commitments
             <Link
               to={`${paramConnection}${paramChannel}${paramCommitment}`}
               key={index}
-              className={style.button}
+              className={style.link}
             >
               <span>Sequence: {commitment.sequence ? commitment.sequence.toString(10) : "–"}</span>
             </Link>
