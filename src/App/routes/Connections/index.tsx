@@ -64,32 +64,38 @@ export function Connections(): JSX.Element {
     <div className="container mx-auto">
       <Navigation />
       <div>
-        {connectionsResponse?.connections?.length ? (
+        {connectionsResponse ? (
           <>
             <span className={style.title}>Connections / client</span>
             <HeightData height={connectionsResponse.height} />
-            <div>
-              {clientIds.map((clientId) => (
-                <div key={clientId} className="flex flex-col items-start">
-                  <div className={style.subtitle}>Client {clientId}</div>
-                  {connectionsResponse.connections?.map((connection) => (
-                    <Link
-                      to={`${pathConnections}/${connection.id}`}
-                      key={connection.id}
-                      className={`${style.button} mt-2 block`}
-                    >
-                      Connection {ellideMiddle(connection.id ?? "–", 20)}
-                    </Link>
+            {connectionsResponse?.connections?.length ? (
+              <>
+                <div>
+                  {clientIds.map((clientId) => (
+                    <div key={clientId} className="flex flex-col items-start">
+                      <div className={style.subtitle}>Client {clientId}</div>
+                      {connectionsResponse.connections?.map((connection) => (
+                        <Link
+                          to={`${pathConnections}/${connection.id}`}
+                          key={connection.id}
+                          className={`${style.button} mt-2 block`}
+                        >
+                          Connection {ellideMiddle(connection.id ?? "–", 20)}
+                        </Link>
+                      ))}
+                    </div>
                   ))}
                 </div>
-              ))}
-            </div>
-            {connectionsResponse.pagination?.nextKey?.length ? (
-              <button onClick={loadMoreConnections}>Load more</button>
-            ) : null}
+                {connectionsResponse.pagination?.nextKey?.length ? (
+                  <button onClick={loadMoreConnections}>Load more</button>
+                ) : null}
+              </>
+            ) : (
+              <span>No connections found</span>
+            )}
           </>
         ) : (
-          <span>No connections found</span>
+          <span>Loading data …</span>
         )}
       </div>
     </div>
