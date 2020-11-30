@@ -24,7 +24,7 @@ export function ClientProvider({ children }: React.HTMLAttributes<HTMLOrSVGEleme
   const [tmClient, setTmClient] = React.useState<TendermintClient>();
   const [ibcClient, setIbcClient] = React.useState<IbcClient>();
   const [value, setValue] = React.useState<ClientContextType>(defaultClientContext);
-  const [loaded, setLoaded] = React.useState(false);
+  const [clientsAvailable, setClientsAvailable] = React.useState(false);
 
   useEffect(() => {
     (async function updateTmClient() {
@@ -46,14 +46,12 @@ export function ClientProvider({ children }: React.HTMLAttributes<HTMLOrSVGEleme
     if (!tmClient || !ibcClient) return;
 
     setValue({ getClient: () => ibcClient });
-    setLoaded(true);
+    setClientsAvailable(true);
   }, [ibcClient, tmClient]);
 
-  return loaded ? (
+  return clientsAvailable ? (
     <ClientContext.Provider value={value}>{children}</ClientContext.Provider>
   ) : (
-    <div className="container mx-auto">
-      Network error: please run a local chain and/or make sure the network configuration is correct
-    </div>
+    <div className="container mx-auto">Setting up client …</div>
   );
 }
