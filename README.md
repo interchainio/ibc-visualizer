@@ -4,8 +4,10 @@ A visualizer for [IBC](https://github.com/cosmos/ics/tree/master/ibc) queries
 
 ## How to run local demo
 
+The demo is SDK `v0.40.0-rc3` compatible, please follow these steps in order to run it:
+
 1. Make sure Docker is installed in your system
-2. Clone [CosmJS](https://github.com/cosmos/cosmjs)
+2. Clone [CosmJS](https://github.com/cosmos/cosmjs) `v0.24.0-alpha.10` or later
 3. In the `cosmjs/scripts/simapp` directory, run:
    ```shell
    ./start.sh
