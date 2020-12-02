@@ -4,19 +4,22 @@ A visualizer for [IBC](https://github.com/cosmos/ics/tree/master/ibc) queries
 
 ## How to run local demo
 
-The demo is SDK `v0.40.0-rc3` compatible, please follow these steps in order to run it:
+The demo is Cosmos SDK `0.40.0-rc3` compatible, please follow these steps in order to run it:
 
-1. Make sure Docker is installed in your system
-2. Clone [CosmJS](https://github.com/cosmos/cosmjs) `v0.24.0-alpha.10` or later
-3. In the `cosmjs/scripts/simapp` directory, run:
-   ```shell
-   ./start.sh
+1. Make sure Docker is installed on your system. This is needed to start a local blockchain.
+2. Start the CosmJS development blockchain "simapp":
+   ```sh
+   git clone https://github.com/cosmos/cosmjs.git
+   git checkout v0.24.0-alpha.10
+   cd cosmjs
+   ./scripts/simapp/start.sh
    ```
-4. In the `ibc-visualizer` project root, run:
-   ```shell
+3. Back in the `ibc-visualizer` repo root, run
+   ```sh
    yarn install
    yarn start
    ```
+   and follow the instructions in the terminal to access the app.
 
 ## Views
 
