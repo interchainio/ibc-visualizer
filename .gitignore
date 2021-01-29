@@ -3,6 +3,9 @@
 # generated tailwind
 /src/tailwind.output.css
 
+# deployment
+.netlify
+
 # dependencies
 /node_modules
 /.pnp
