@@ -9,6 +9,19 @@ import { Navigation } from "../../components/Navigation";
 import { pathConnections } from "../../paths";
 import { style } from "../../style";
 
+// orders strings like "07-tendermint-0" numerically
+function compareClientIds(a: string, b: string): number {
+  const arrayA = a.split("-");
+  const arrayB = b.split("-");
+  arrayA.splice(1, 1);
+  arrayB.splice(1, 1);
+  const [firstNumberA, secondNumberA] = arrayA.map((stringNum) => Number.parseInt(stringNum, 10));
+  const [firstNumberB, secondNumberB] = arrayB.map((stringNum) => Number.parseInt(stringNum, 10));
+
+  if (firstNumberA > firstNumberB) return firstNumberA - firstNumberB;
+  return secondNumberA - secondNumberB;
+}
+
 export function Connections(): JSX.Element {
   const { getClient } = useClient();
 
@@ -20,12 +33,15 @@ export function Connections(): JSX.Element {
       const connectionsResponse = await getClient().ibc.unverified.connections();
       setConnectionsResponse(connectionsResponse);
 
-      const clientIds =
+      const nonEmptyClientIds =
         connectionsResponse.connections
           ?.map((connection) => connection.clientId ?? "")
           .filter((clientId) => clientId !== "") ?? [];
 
-      setClientIds(clientIds.sort());
+      const nonDuplicateClientIds = [...new Set(nonEmptyClientIds)];
+      const orderedClientIds = nonDuplicateClientIds.sort(compareClientIds);
+
+      setClientIds(orderedClientIds);
     })();
   }, [getClient]);
 
@@ -54,7 +70,7 @@ export function Connections(): JSX.Element {
       // must remove duplicate client ids
       const mergedClientIds = [...oldClientIds, ...newClientIds];
       const uniqueClientIds = [...new Set(mergedClientIds)];
-      const sortedClientIds = uniqueClientIds.sort();
+      const sortedClientIds = uniqueClientIds.sort(compareClientIds);
 
       return sortedClientIds;
     });
@@ -74,15 +90,24 @@ export function Connections(): JSX.Element {
                   {clientIds.map((clientId) => (
                     <div key={clientId} className="flex flex-col items-start">
                       <div className={style.subtitle}>Client {clientId}</div>
-                      {connectionsResponse.connections?.map((connection) => (
-                        <Link
-                          to={`${pathConnections}/${connection.id}`}
-                          key={connection.id}
-                          className={`${style.link} mt-2 block`}
-                        >
-                          Connection {ellideMiddle(connection.id ?? "–", 20)}
-                        </Link>
-                      ))}
+                      {connectionsResponse.connections
+                        ?.filter((connection) => connection.clientId === clientId)
+                        .sort((a, b) => {
+                          // orders strings like "connection-6" numerically
+                          const numberA = Number.parseInt(a.id?.split("-")[1] || "", 10);
+                          const numberB = Number.parseInt(b.id?.split("-")[1] || "", 10);
+
+                          return numberA - numberB;
+                        })
+                        .map((connection) => (
+                          <Link
+                            to={`${pathConnections}/${connection.id}`}
+                            key={connection.id}
+                            className={`${style.link} mt-2 block`}
+                          >
+                            Connection {ellideMiddle(connection.id ?? "–", 20)}
+                          </Link>
+                        ))}
                     </div>
                   ))}
                 </div>
