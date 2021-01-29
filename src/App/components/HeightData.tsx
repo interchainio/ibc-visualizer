@@ -12,8 +12,8 @@ export function HeightData({ height }: HeightDataProps): JSX.Element {
     <div className="m-2 ml-0">
       <span className={style.subtitle}>Height</span>
       <div className="flex flex-col">
-        <span>Version height: {height?.versionHeight?.toString(10) ?? "–"}</span>
-        <span>Version number: {height?.versionNumber?.toString(10) ?? "–"}</span>
+        <span>Version height: {height?.revisionHeight?.toString(10) ?? "–"}</span>
+        <span>Version number: {height?.revisionNumber?.toString(10) ?? "–"}</span>
       </div>
     </div>
   );
