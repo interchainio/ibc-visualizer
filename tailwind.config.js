@@ -1,6 +1,6 @@
 module.exports = {
   purge: {
     mode: "layers",
-    content: ["./src/**/*.tsx"],
+    content: ["./src/**/*.tsx", "./src/**/*.ts"],
   },
 };
