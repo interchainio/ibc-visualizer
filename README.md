@@ -7,7 +7,8 @@ A visualizer for [IBC](https://github.com/cosmos/ics/tree/master/ibc) queries
 The demo is Cosmos SDK `0.40.0-rc3` compatible, please follow these steps in order to run it:
 
 1. Make sure Docker is installed on your system. This is needed to start a local blockchain.
-2. Start the CosmJS development blockchain "simapp":
+2. Make sure `git-lfs` is [installed](https://docs.github.com/en/github/managing-large-files/versioning-large-files/installing-git-large-file-storage) on your system. This is needed to clone [cosmos/cosmjs](https://github.com/cosmos/cosmjs).
+3. Start the CosmJS development blockchain "simapp":
    ```sh
    git clone https://github.com/cosmos/cosmjs.git
    cd cosmjs
