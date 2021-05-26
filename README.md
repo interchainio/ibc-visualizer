@@ -10,8 +10,8 @@ The demo is Cosmos SDK `0.40.0-rc3` compatible, please follow these steps in ord
 2. Start the CosmJS development blockchain "simapp":
    ```sh
    git clone https://github.com/cosmos/cosmjs.git
-   git checkout v0.24.0-alpha.10
    cd cosmjs
+   git checkout v0.24.0-alpha.10
    ./scripts/simapp/start.sh
    ```
 3. Back in the `ibc-visualizer` repo root, run
