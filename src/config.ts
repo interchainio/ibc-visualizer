@@ -15,7 +15,11 @@ const musselnet: AppConfig = {
   rpcUrl: "https://rpc.musselnet.cosmwasm.com",
 };
 
-const configs: NetworkConfigs = { local, musselnet };
+const oysternet: AppConfig = {
+  rpcUrl: "rpc.oysternet.cosmwasm.com",
+};
+
+const configs: NetworkConfigs = { local, musselnet, oysternet };
 
 function getAppConfig(): AppConfig {
   const network = process.env.REACT_APP_NETWORK;

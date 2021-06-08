@@ -21,7 +21,7 @@ export function CommitmentsList({ connectionId, portId, channelId }: Commitments
 
   useEffect(() => {
     (async function updatePacketCommitmentsResponse() {
-      const packetCommitmentsResponse = await getClient().ibc.unverified.packetCommitments(portId, channelId);
+      const packetCommitmentsResponse = await getClient().ibc.channel.packetCommitments(portId, channelId);
       setPacketCommitmentsResponse(packetCommitmentsResponse);
     })();
   }, [getClient, portId, channelId]);

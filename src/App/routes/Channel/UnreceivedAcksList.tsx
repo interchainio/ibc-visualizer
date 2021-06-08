@@ -16,7 +16,7 @@ export function UnreceivedAcksList({ portId, channelId, sequence }: UnreceivedAc
 
   useEffect(() => {
     (async function updateUnreceivedAcksResponse() {
-      const unreceivedAcksResponse = await getClient().ibc.unverified.unreceivedAcks(portId, channelId, [
+      const unreceivedAcksResponse = await getClient().ibc.channel.unreceivedAcks(portId, channelId, [
         sequence,
       ]);
       setUnreceivedAcksResponse(unreceivedAcksResponse);

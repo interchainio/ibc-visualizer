@@ -20,11 +20,9 @@ export function UnreceivedPacketsList({
 
   useEffect(() => {
     (async function updateUnreceivedPacketsResponse() {
-      const unreceivedPacketsResponse = await getClient().ibc.unverified.unreceivedPackets(
-        portId,
-        channelId,
-        [sequence],
-      );
+      const unreceivedPacketsResponse = await getClient().ibc.channel.unreceivedPackets(portId, channelId, [
+        sequence,
+      ]);
       setUnreceivedPacketsResponse(unreceivedPacketsResponse);
     })();
   }, [getClient, portId, channelId, sequence]);

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useClient } from "../../../contexts/ClientContext";
 import { IbcConnectionResponse } from "../../../types/ibc";
 import { printIbcConnectionState } from "../../../utils/ibc";
-import { CounterpartyData } from "../../components/CounterpartyData";
+import { CounterpartyData } from "../../components/ConnectionCounterpartyData";
 import { HeightData } from "../../components/HeightData";
 import { style } from "../../style";
 
@@ -18,7 +18,7 @@ export function ConnectionData({ connectionId }: ConnectionDataProps): JSX.Eleme
 
   useEffect(() => {
     (async function updateConnectionResponse() {
-      const connectionResponse = await getClient().ibc.unverified.connection(connectionId);
+      const connectionResponse = await getClient().ibc.connection.connection(connectionId);
       setConnectionResponse(connectionResponse);
     })();
   }, [getClient, connectionId]);
@@ -26,7 +26,7 @@ export function ConnectionData({ connectionId }: ConnectionDataProps): JSX.Eleme
   return connectionResponse?.connection ? (
     <div>
       <div className={style.title}>Data</div>
-      {connectionId ? <div>Connection ID: {connectionId}</div> : null}
+      {connectionId && <div>Connection ID: {connectionId}</div>}
       <div>Proof: {connectionResponse.proof?.length ? toHex(connectionResponse.proof) : "–"}</div>
       <HeightData height={connectionResponse.proofHeight} />
       <div className="flex flex-col">
@@ -50,7 +50,7 @@ export function ConnectionData({ connectionId }: ConnectionDataProps): JSX.Eleme
         ) : (
           <span className={style.subtitle}>No versions found</span>
         )}
-        <CounterpartyData counterparty={connectionResponse.connection.counterparty} />
+        <CounterpartyData counterparty={connectionResponse.connection.counterparty ?? null} />
       </div>
     </div>
   ) : (

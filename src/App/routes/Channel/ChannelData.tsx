@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useClient } from "../../../contexts/ClientContext";
 import { IbcChannelResponse } from "../../../types/ibc";
 import { printIbcChannelState, printIbcOrder } from "../../../utils/ibc";
-import { CounterpartyData } from "../../components/CounterpartyData";
+import { CounterpartyData } from "../../components/ChannelCounterpartyData";
 import { HeightData } from "../../components/HeightData";
 import { style } from "../../style";
 
@@ -19,7 +19,7 @@ export function ChannelData({ portId, channelId }: ChannelDataProps): JSX.Elemen
 
   useEffect(() => {
     (async function updateChannelResponse() {
-      const channelResponse = await getClient().ibc.unverified.channel(portId, channelId);
+      const channelResponse = await getClient().ibc.channel.channel(portId, channelId);
       setChannelResponse(channelResponse);
     })();
   }, [getClient, portId, channelId]);
@@ -27,8 +27,8 @@ export function ChannelData({ portId, channelId }: ChannelDataProps): JSX.Elemen
   return channelResponse?.channel ? (
     <div>
       <div className={style.title}>Data</div>
-      {portId ? <div>Port ID: {portId}</div> : null}
-      {channelId ? <div>Channel ID: {channelId}</div> : null}
+      {portId && <div>Port ID: {portId}</div>}
+      {channelId && <div>Channel ID: {channelId}</div>}
       <div>Proof: {channelResponse.proof?.length ? toHex(channelResponse.proof) : "–"}</div>
       <HeightData height={channelResponse.proofHeight} />
       <div className="flex flex-col">
@@ -39,7 +39,7 @@ export function ChannelData({ portId, channelId }: ChannelDataProps): JSX.Elemen
         <span>
           Ordering: {channelResponse.channel.ordering ? printIbcOrder(channelResponse.channel.ordering) : "–"}
         </span>
-        <CounterpartyData counterparty={channelResponse.channel.counterparty} />
+        <CounterpartyData counterparty={channelResponse.channel.counterparty ?? null} />
         <span>
           Connection hops:{" "}
           {channelResponse.channel.connectionHops ? channelResponse.channel.connectionHops.join(", ") : "–"}

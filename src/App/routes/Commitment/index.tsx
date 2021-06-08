@@ -1,4 +1,5 @@
 import { toHex } from "@cosmjs/encoding";
+import Long from "long";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -25,10 +26,10 @@ export function Commitment(): JSX.Element {
     const sequenceNumber = Number.parseInt(sequence, 10);
 
     (async function updateCommitmentResponse() {
-      const commitmentResponse = await getClient().ibc.unverified.packetCommitment(
+      const commitmentResponse = await getClient().ibc.channel.packetCommitment(
         portId,
         channelId,
-        sequenceNumber,
+        Long.fromNumber(sequenceNumber),
       );
       setCommitmentResponse(commitmentResponse);
     })();
@@ -38,9 +39,9 @@ export function Commitment(): JSX.Element {
     <div className="container mx-auto flex flex-col">
       <Navigation />
       <span className={style.title}>Data</span>
-      {portId ? <span>Port ID: {portId}</span> : null}
-      {channelId ? <span>Channel ID: {channelId}</span> : null}
-      {sequence ? <span>Sequence: {sequence}</span> : null}
+      {portId && <span>Port ID: {portId}</span>}
+      {channelId && <span>Channel ID: {channelId}</span>}
+      {sequence && <span>Sequence: {sequence}</span>}
       {commitmentResponse?.commitment ? (
         <div className="flex flex-col">
           <span>Proof: {commitmentResponse.proof?.length ? toHex(commitmentResponse.proof) : "–"}</span>
