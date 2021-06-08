@@ -12,8 +12,8 @@ export function CounterpartyData({ counterparty }: CounterpartyDataProps): JSX.E
   return (
     <div className="flex flex-col m-2 ml-0">
       <span className={style.subtitle}>Counterparty</span>
-      {counterparty?.clientId ? <span>Client ID: {counterparty.clientId}</span> : null}
-      {counterparty?.connectionId ? <span>Connection ID: {counterparty.connectionId}</span> : null}
+      {counterparty?.clientId && <span>Client ID: {counterparty.clientId}</span>}
+      {counterparty?.connectionId && <span>Connection ID: {counterparty.connectionId}</span>}
       {counterparty?.prefix?.keyPrefix?.length ? (
         <span>Prefix: {toHex(counterparty?.prefix?.keyPrefix)}</span>
       ) : null}

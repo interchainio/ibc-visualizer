@@ -11,8 +11,8 @@ export function CounterpartyData({ counterparty }: CounterpartyDataProps): JSX.E
   return (
     <div className="flex flex-col m-2 ml-0">
       <span className={style.subtitle}>Counterparty</span>
-      {counterparty?.portId ? <span>Port ID: {counterparty.portId}</span> : null}
-      {counterparty?.channelId ? <span>Channel ID: {counterparty.channelId}</span> : null}
+      {counterparty?.portId && <span>Port ID: {counterparty.portId}</span>}
+      {counterparty?.channelId && <span>Channel ID: {counterparty.channelId}</span>}
     </div>
   );
 }

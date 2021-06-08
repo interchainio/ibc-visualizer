@@ -39,9 +39,9 @@ export function Commitment(): JSX.Element {
     <div className="container mx-auto flex flex-col">
       <Navigation />
       <span className={style.title}>Data</span>
-      {portId ? <span>Port ID: {portId}</span> : null}
-      {channelId ? <span>Channel ID: {channelId}</span> : null}
-      {sequence ? <span>Sequence: {sequence}</span> : null}
+      {portId && <span>Port ID: {portId}</span>}
+      {channelId && <span>Channel ID: {channelId}</span>}
+      {sequence && <span>Sequence: {sequence}</span>}
       {commitmentResponse?.commitment ? (
         <div className="flex flex-col">
           <span>Proof: {commitmentResponse.proof?.length ? toHex(commitmentResponse.proof) : "–"}</span>
