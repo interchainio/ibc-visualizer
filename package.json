@@ -13,6 +13,7 @@
     "start:base": "react-scripts start",
     "start": "yarn start:musselnet",
     "start:musselnet": "REACT_APP_NETWORK=musselnet yarn start:base",
+    "start:oysternet": "REACT_APP_NETWORK=oysternet yarn start:base",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
