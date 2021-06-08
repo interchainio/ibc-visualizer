@@ -1,11 +1,11 @@
 import { toHex } from "@cosmjs/encoding";
 import React from "react";
 
-import { IbcChannelCounterparty, IbcConnectionCounterparty } from "../../types/ibc";
+import { IbcConnectionCounterparty } from "../../types/ibc";
 import { style } from "../style";
 
 interface CounterpartyDataProps {
-  readonly counterparty?: (IbcConnectionCounterparty & IbcChannelCounterparty) | null;
+  readonly counterparty?: IbcConnectionCounterparty | null;
 }
 
 export function CounterpartyData({ counterparty }: CounterpartyDataProps): JSX.Element {
@@ -17,8 +17,6 @@ export function CounterpartyData({ counterparty }: CounterpartyDataProps): JSX.E
       {counterparty?.prefix?.keyPrefix?.length ? (
         <span>Prefix: {toHex(counterparty?.prefix?.keyPrefix)}</span>
       ) : null}
-      {counterparty?.portId ? <span>Port ID: {counterparty.portId}</span> : null}
-      {counterparty?.channelId ? <span>Channel ID: {counterparty.channelId}</span> : null}
     </div>
   );
 }
