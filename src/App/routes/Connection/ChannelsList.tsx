@@ -22,7 +22,7 @@ export function ChannelsList({ connectionId }: ChannelsListProps): JSX.Element {
 
   useEffect(() => {
     (async function updateChannelsResponse() {
-      const channelsResponse = await getClient().ibc.unverified.connectionChannels(connectionId);
+      const channelsResponse = await getClient().ibc.channel.connectionChannels(connectionId);
       setChannelsResponse(channelsResponse);
     })();
   }, [connectionId, getClient]);
@@ -30,7 +30,7 @@ export function ChannelsList({ connectionId }: ChannelsListProps): JSX.Element {
   async function loadMoreChannels(): Promise<void> {
     if (!channelsResponse?.pagination?.nextKey?.length) return;
 
-    const newChannelsResponse = await getClient().ibc.unverified.connectionChannels(
+    const newChannelsResponse = await getClient().ibc.channel.connectionChannels(
       connectionId,
       channelsResponse.pagination.nextKey,
     );

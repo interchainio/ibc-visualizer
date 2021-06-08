@@ -30,7 +30,7 @@ export function Connections(): JSX.Element {
 
   useEffect(() => {
     (async function updateConnectionsResponse() {
-      const connectionsResponse = await getClient().ibc.unverified.connections();
+      const connectionsResponse = await getClient().ibc.connection.connections();
       setConnectionsResponse(connectionsResponse);
 
       const nonEmptyClientIds =
@@ -48,7 +48,7 @@ export function Connections(): JSX.Element {
   async function loadMoreConnections(): Promise<void> {
     if (!connectionsResponse?.pagination?.nextKey?.length) return;
 
-    const newConnectionsResponse = await getClient().ibc.unverified.connections(
+    const newConnectionsResponse = await getClient().ibc.connection.connections(
       connectionsResponse.pagination.nextKey,
     );
 

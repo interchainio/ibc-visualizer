@@ -27,7 +27,7 @@ export function AcknowledgementsList({
 
   useEffect(() => {
     (async function updatePacketAcknowledgementsResponse() {
-      const acketAcknowledgementsResponse = await getClient().ibc.unverified.packetAcknowledgements(
+      const acketAcknowledgementsResponse = await getClient().ibc.channel.packetAcknowledgements(
         portId,
         channelId,
       );

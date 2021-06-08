@@ -25,7 +25,7 @@ export function Acknowledgement(): JSX.Element {
     const sequenceNumber = Number.parseInt(sequence, 10);
 
     (async function updateAckResponse() {
-      const ackResponse = await getClient().ibc.unverified.packetAcknowledgement(
+      const ackResponse = await getClient().ibc.channel.packetAcknowledgement(
         portId,
         channelId,
         sequenceNumber,

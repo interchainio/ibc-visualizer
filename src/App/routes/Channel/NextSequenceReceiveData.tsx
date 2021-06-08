@@ -17,7 +17,7 @@ export function NextSequenceReceiveData({ portId, channelId }: NextSequenceRecei
 
   useEffect(() => {
     (async function updateNextSequenceReceiveResponse() {
-      const nextSequenceReceiveResponse = await getClient().ibc.unverified.nextSequenceReceive(
+      const nextSequenceReceiveResponse = await getClient().ibc.channel.nextSequenceReceive(
         portId,
         channelId,
       );
