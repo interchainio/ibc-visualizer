@@ -1,33 +1,31 @@
 interface AppConfig {
   readonly rpcUrl: string;
 }
+
 interface NetworkConfigs {
   readonly [key: string]: AppConfig;
 }
 
-// Configuration for CosmJS development chain simapp.
-// See https://github.com/cosmos/cosmjs/tree/master/scripts/simapp.
-const local: AppConfig = {
-  rpcUrl: "http://localhost:26658",
+const configs: NetworkConfigs = {
+  // Configuration for CosmJS development chain simapp.
+  // See https://github.com/cosmos/cosmjs/tree/master/scripts/simapp.
+  local: {
+    rpcUrl: "http://localhost:26658",
+  },
+  "nois-testnet-003": {
+    rpcUrl: "https://nois.rpc.bccnodes.com/",
+  },
 };
-
-const musselnet: AppConfig = {
-  rpcUrl: "https://rpc.musselnet.cosmwasm.com",
-};
-
-const oysternet: AppConfig = {
-  rpcUrl: "rpc.oysternet.cosmwasm.com",
-};
-
-const configs: NetworkConfigs = { local, musselnet, oysternet };
 
 function getAppConfig(): AppConfig {
   const network = process.env.REACT_APP_NETWORK;
-  if (!network) return local;
+  if (!network) {
+    throw new Error("Please set REACT_APP_NETWORK");
+  }
 
   const config = configs[network];
   if (!config) {
-    throw new Error(`No configuration found for network ${network}`);
+    throw new Error(`No configuration found for network ${network}. See src/config.ts.`);
   }
 
   return config;
