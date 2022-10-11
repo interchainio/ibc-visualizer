@@ -1,5 +1,4 @@
 import { toHex } from "@cosmjs/encoding";
-import Long from "long";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -29,7 +28,7 @@ export function Commitment(): JSX.Element {
       const commitmentResponse = await getClient().ibc.channel.packetCommitment(
         portId,
         channelId,
-        Long.fromNumber(sequenceNumber),
+        sequenceNumber,
       );
       setCommitmentResponse(commitmentResponse);
     })();
