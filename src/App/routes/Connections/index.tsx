@@ -3,24 +3,12 @@ import { Link } from "react-router-dom";
 
 import { useClient } from "../../../contexts/ClientContext";
 import { IbcConnectionsResponse } from "../../../types/ibc";
+import { compareComponentWise } from "../../../utils/sort";
 import { ellideMiddle } from "../../../utils/strings";
 import { HeightData } from "../../components/HeightData";
 import { Navigation } from "../../components/Navigation";
 import { pathConnections } from "../../paths";
 import { style } from "../../style";
-
-// orders strings like "07-tendermint-0" numerically
-function compareClientIds(a: string, b: string): number {
-  const arrayA = a.split("-");
-  const arrayB = b.split("-");
-  arrayA.splice(1, 1);
-  arrayB.splice(1, 1);
-  const [firstNumberA, secondNumberA] = arrayA.map((stringNum) => Number.parseInt(stringNum, 10));
-  const [firstNumberB, secondNumberB] = arrayB.map((stringNum) => Number.parseInt(stringNum, 10));
-
-  if (firstNumberA > firstNumberB) return firstNumberA - firstNumberB;
-  return secondNumberA - secondNumberB;
-}
 
 export function Connections(): JSX.Element {
   const { getClient } = useClient();
@@ -39,7 +27,7 @@ export function Connections(): JSX.Element {
           .filter((clientId) => clientId !== "") ?? [];
 
       const nonDuplicateClientIds = [...new Set(nonEmptyClientIds)];
-      const orderedClientIds = nonDuplicateClientIds.sort(compareClientIds);
+      const orderedClientIds = nonDuplicateClientIds.sort(compareComponentWise);
 
       setClientIds(orderedClientIds);
     })();
@@ -70,7 +58,7 @@ export function Connections(): JSX.Element {
       // must remove duplicate client ids
       const mergedClientIds = [...oldClientIds, ...newClientIds];
       const uniqueClientIds = [...new Set(mergedClientIds)];
-      const sortedClientIds = uniqueClientIds.sort(compareClientIds);
+      const sortedClientIds = uniqueClientIds.sort(compareComponentWise);
 
       return sortedClientIds;
     });
@@ -82,32 +70,38 @@ export function Connections(): JSX.Element {
       <div>
         {connectionsResponse ? (
           <>
-            <span className={style.title}>Connections / client</span>
             <HeightData height={connectionsResponse.height} />
+            <span className={style.title}>Connections</span>
             {connectionsResponse.connections?.length ? (
               <>
                 <div>
                   {clientIds.map((clientId) => (
                     <div key={clientId} className="flex flex-col items-start">
-                      <div className={style.subtitle}>Client {clientId}</div>
-                      {connectionsResponse.connections
-                        ?.filter((connection) => connection.clientId === clientId)
-                        .sort((a, b) => {
-                          // orders strings like "connection-6" numerically
-                          const numberA = Number.parseInt(a.id?.split("-")[1] || "", 10);
-                          const numberB = Number.parseInt(b.id?.split("-")[1] || "", 10);
+                      <div>
+                        <strong>Client {clientId}</strong>
+                      </div>
+                      <ol>
+                        {connectionsResponse.connections
+                          ?.filter((connection) => connection.clientId === clientId)
+                          .sort((a, b) => {
+                            // orders strings like "connection-6" numerically
+                            const numberA = Number.parseInt(a.id?.split("-")[1] || "", 10);
+                            const numberB = Number.parseInt(b.id?.split("-")[1] || "", 10);
 
-                          return numberA - numberB;
-                        })
-                        .map((connection) => (
-                          <Link
-                            to={`${pathConnections}/${connection.id}`}
-                            key={connection.id}
-                            className={`${style.link} mt-2 block`}
-                          >
-                            Connection {ellideMiddle(connection.id ?? "–", 20)}
-                          </Link>
-                        ))}
+                            return numberA - numberB;
+                          })
+                          .map((connection) => (
+                            <li key={connection.id}>
+                              <Link
+                                to={`${pathConnections}/${connection.id}`}
+                                key={connection.id}
+                                className={`${style.link} mt-2 ml-5 block`}
+                              >
+                                {ellideMiddle(connection.id ?? "–", 20)}
+                              </Link>
+                            </li>
+                          ))}
+                      </ol>
                     </div>
                   ))}
                 </div>
